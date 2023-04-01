@@ -1,0 +1,11 @@
+##
+auth:
+  ## @param auth.enabled Enable password authentication
+  ##
+  enabled: false
+  ## @param auth.sentinel Enable password authentication on sentinels too
+master:
+   resources:
+      limits:
+        cpu: 200m
+        memory: 200Mi

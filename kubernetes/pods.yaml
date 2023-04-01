@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapp
+spec:
+  selector:
+    matchLabels:
+      app: nodeapp 
+  replicas: 1
+  template:
+    metadata:
+      name: nodeapp
+      labels:
+        app: nodeapp
+    spec:
+      containers:
+        - name: nodeapp
+          image: 437189082902.dkr.ecr.us-east-1.amazonaws.com/capstonec39:latest
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: .5
+            limits:
+              memory: "1000Mi"
+              cpu: 1
+      tolerations:
+      - key: anything
+        operator: "Equal"
+        value: "c39"
+        effect: "NoSchedule"
+
+
+---
+
+apiVersion: v1
+
+kind: Service
+
+metadata:
+  name: nodeapp
+  labels:
+    app: nodeapp
+
+spec:
+  selector:
+    app: nodeapp
+  type: LoadBalancer
+  ports:
+  - name: "nodeapp"
+    protocol: TCP
+    port: 80
+    targetPort: 8081
+
